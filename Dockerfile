@@ -15,8 +15,5 @@ RUN pip install --no-cache-dir poetry && \
 # timezone 설정
 ENV TZ=Asia/Seoul
 
-# 볼륨 설정
-VOLUME ["~/yieldNavigator/api/yieldNavigator:/src"]
-
 # 컨테이너 시작 시 uvicorn 실행
 CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]
