@@ -13,6 +13,9 @@ def find_recent_dividends(ticker) -> dict:
     stock = yf.Ticker(ticker)
     dividends = stock.dividends
 
+    # 전체 배당금 평균 계산
+    totalAvg = sum(dividends) / len(dividends) if len(dividends) > 0 else 0
+
     # 배당금이 10개 이상이라면 10개까지만 가져오기
     if len(dividends) > 10:
         dividends = dividends[-10:]
@@ -23,11 +26,11 @@ def find_recent_dividends(ticker) -> dict:
 
     price = stock.history(period="1d")['Close'].iloc[-1]
 
-    # 전체 배당금 평균 계산
-    totalAvg = sum(dividends) / len(dividends) if len(dividends) > 0 else 0
-
     # 최근 5번 배당금 평균 계산
-    trendDividends = dividends[-5:]
+    if len(dividends) > 5:
+        trendDividends = dividends[-5:]
+    else:
+        trendDividends = dividends
     trendAvg = sum(trendDividends) / len(trendDividends) if len(trendDividends) > 0 else 0
 
     # 배당금 지급 날짜 간의 차이를 계산
@@ -57,7 +60,6 @@ def find_recent_dividends(ticker) -> dict:
     }
 
     return result
-
 
 
 def get_user_stocks(uid):

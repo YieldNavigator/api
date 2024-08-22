@@ -36,7 +36,7 @@ async def get_stock(ticker):
 
 
 @router.get("/user-stocks/{uid}")
-async def get_user_stocks(uid):
+async def get_stocks(uid):
     '''
      사용자 보유 정보 조회
     :param uid:
