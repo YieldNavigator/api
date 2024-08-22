@@ -1,7 +1,7 @@
 from starlette.middleware.cors import CORSMiddleware
 
 from src.traker import *
-from fastapi import FastAPI
+from fastapi import FastAPI, APIRouter
 import uvicorn
 
 '''
@@ -26,7 +26,8 @@ user_stock {
 
 '''
 
-app = FastAPI(docs_url='/yn/docs', openapi_url='/yn/openapi.json')
+app = FastAPI()
+router = APIRouter(prefix="/yn")
 
 
 app.add_middleware(
@@ -51,7 +52,7 @@ app.add_middleware(
 '''
 
 
-@app.get("/yn/stocks/{ticker}")
+@router.get("/stocks/{ticker}")
 async def get_stock(ticker):
     return find_recent_dividends(ticker)
 
@@ -72,7 +73,7 @@ GET /user-stocks?uid=1234
 '''
 
 
-@app.get("/yn/user-stocks/{uid}")
+@router.get("/user-stocks/{uid}")
 async def get_stock(uid):
     return get_user_stocks(uid)
 
