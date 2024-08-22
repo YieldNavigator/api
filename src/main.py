@@ -17,11 +17,41 @@ app.add_middleware(
 
 @router.get("/stocks/{ticker}")
 async def get_stock(ticker):
+    '''
+    종목 정보 조회
+
+    :param ticker:
+    :return: { 'ticker': 'NVDY',
+            'price': 25.639999389648438,
+            'period': 'monthly',
+            'divinedHistories': [
+              { 'divineDate': '2024-08-07', 'amount': 1.251 },
+              { 'divineDate': '2024-07-06', 'amount': 2.576 },
+            ],
+            'totalAvg': xxx,
+            'xxxxAvg': xxx
+        }
+    '''
     return find_recent_dividends(ticker)
 
 
 @router.get("/user-stocks/{uid}")
 async def get_user_stocks(uid):
+    '''
+     사용자 보유 정보 조회
+    :param uid:
+    :return:
+        [
+          { 'ticker': 'NVDY',
+            'targetShares': 150,
+            'currentShares': 90
+          },
+          { 'ticker': 'CONY',
+            'targetShares': 150,
+            'currentShares': 20
+          }
+        ]
+    '''
     return get_user_stocks(uid)
 
 

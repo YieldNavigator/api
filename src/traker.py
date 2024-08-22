@@ -5,7 +5,10 @@ def find_recent_dividends(ticker) -> dict:
     '''
     티커를 받아 티커 이름, 현재 주가, 최근 10개의 배당일과 배당금액을 리스트로 리턴
     :param ticker: 배당주 티커
-    :return: {"ticker": 티커 이름, "price": 현재 주가(float), "period": 배당 주기, "divinedHistories": [{"divineDate": 배당일("yyyy-mm-dd"), "amount": 배당금(float)}]}
+    :return: {"ticker": 티커 이름, "price": 현재 주가(float), "period": 배당 주기,
+              "divinedHistories": [{"divineDate": 배당일("yyyy-mm-dd"), "amount": 배당금(float)}],
+              "totalAvg": 전체 배당금 평균(float),
+              "trendAvg": 최근 5번 배당금 평균(float)}
     '''
     stock = yf.Ticker(ticker)
     dividends = stock.dividends
@@ -19,6 +22,13 @@ def find_recent_dividends(ticker) -> dict:
                         for date, amount in zip(dividends.index, dividends.tolist())][::-1]
 
     price = stock.history(period="1d")['Close'].iloc[-1]
+
+    # 전체 배당금 평균 계산
+    totalAvg = sum(dividends) / len(dividends) if len(dividends) > 0 else 0
+
+    # 최근 5번 배당금 평균 계산
+    trendDividends = dividends[-5:]
+    trendAvg = sum(trendDividends) / len(trendDividends) if len(trendDividends) > 0 else 0
 
     # 배당금 지급 날짜 간의 차이를 계산
     date_diffs = dividends.index.to_series().diff().dropna()
@@ -41,14 +51,22 @@ def find_recent_dividends(ticker) -> dict:
         "ticker": ticker,
         "price": float(price),
         "period": period,
-        "divinedHistories": divinedHistories
+        "divinedHistories": divinedHistories,
+        "totalAvg": totalAvg,
+        "trendAvg": trendAvg
     }
 
     return result
 
 
 
-
-
 def get_user_stocks(uid):
-    return None
+    res = [{'ticker': 'NVDY',
+            'targetShares': 150,
+            'currentShares': 90
+            },
+           {'ticker': 'CONY',
+            'targetShares': 150,
+            'currentShares': 20
+            }]
+    return res
