@@ -1,6 +1,6 @@
 from starlette.middleware.cors import CORSMiddleware
 
-from yieldNavigator.traker import *
+from src.traker import *
 from fastapi import FastAPI
 import uvicorn
 

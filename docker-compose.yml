@@ -2,12 +2,12 @@ version: '3.3'
 services:
   yieldNavigator-api:
     image: yieldnavigator:latest
-    container_name: yieldNavigator-api
+    container_name: src-api
     ports:
       - "18080:8080"
     volumes:
-      - ~/yieldNavigator/api/yieldNavigator:/src
-    working_dir: /src
-    command: ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]
+      - ~/yieldNavigator/api/src:/yieldNavigator/src
+    working_dir: /yieldNavigator
+    command: ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0", "--port", "8080"]
     environment:
       TZ: "Asia/Seoul"
