@@ -39,7 +39,7 @@ app.add_middleware(
 )
 '''
 -- 종목 정보 조회
-{ 'ticker': 'NVDY',
+{ 'ticker': 'NVDY', 
     'price': 25.639999389648438,
     'period': 'monthly',
     'divinedHistories': [
