@@ -26,7 +26,8 @@ user_stock {
 
 '''
 
-app = FastAPI()
+app = FastAPI(docs_url='/yn/docs', openapi_url='/yn/openapi.json')
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -50,7 +51,7 @@ app.add_middleware(
 '''
 
 
-@app.get("/stocks/{ticker}")
+@app.get("/yn/stocks/{ticker}")
 async def get_stock(ticker):
     return find_recent_dividends(ticker)
 
@@ -71,7 +72,7 @@ GET /user-stocks?uid=1234
 '''
 
 
-@app.get("/user-stocks/{uid}")
+@app.get("/yn/user-stocks/{uid}")
 async def get_stock(uid):
     return get_user_stocks(uid)
 
