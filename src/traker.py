@@ -72,3 +72,18 @@ def get_user_stocks(uid):
             'currentShares': 20
             }]
     return res
+
+
+def find_dividends_list(ticker_list) -> str:
+    '''
+    ticker_list를 스프레드시트의 셀 그대로 복붙해서 사용 가능하게 설정 \t 기준으로 스플릿 해서 사용함
+    :param ticker_list:
+    :return: 주가를 \t 간격으로 띄워서 문자열로 리턴
+    '''
+    res = []
+    ticker_list = ticker_list.split('\t')
+    for ticker in ticker_list:
+        stock = yf.Ticker(ticker)
+        dividends = stock.dividends
+        res.append(dividends[-1])
+    return '\t'.join([str(item) for item in res])

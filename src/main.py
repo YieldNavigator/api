@@ -35,6 +35,16 @@ async def get_stock(ticker):
     return find_recent_dividends(ticker)
 
 
+@router.get("/stocks/{ticker_list}")
+async def get_dividends_list(ticker_list) -> str:
+    '''
+    ticker_list를 스프레드시트의 셀 그대로 복붙해서 사용 가능하게 설정 \t 기준으로 스플릿 해서 사용함
+    :param ticker_list:
+    :return: 주가를 \t 간격으로 띄워서 문자열로 리턴
+    '''
+    return find_dividends_list(ticker_list)
+
+
 @router.get("/user-stocks/{uid}")
 async def get_stocks(uid):
     '''
